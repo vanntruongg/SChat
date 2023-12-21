@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import authService from '../service/auth.service';
 import userService from '../service/user.service';
-import User from '../interfaces/user';
+import { IUser } from '../interfaces/index';
 import { login } from '../redux/authSlice';
 
 const Login = () => {
@@ -26,7 +26,7 @@ const Login = () => {
 
     if (res.status === 200) {
       navigate('/schat');
-      const user: User | undefined = await userService.getUserByEmail();
+      const user: IUser | undefined = await userService.getUserByEmail();
       if (user) {
         dispatch(login(user));
       }
@@ -74,7 +74,7 @@ const Login = () => {
                   href=""
                   className="text-12 text-gray-500 underline hover:underline hover:text-blue-700"
                 >
-                  Quên mật khẩu?
+                  Forgot password?
                 </a>
               </div>
             </div>

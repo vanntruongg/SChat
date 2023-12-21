@@ -3,7 +3,7 @@ import authService from '../service/auth.service';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 const Register = () => {
-  const [username, setUsername] = useState<string>('');
+  const [realName, setRealName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -12,9 +12,9 @@ const Register = () => {
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await authService.register({
-      userName: username,
-      email: email,
-      password: password,
+      realName,
+      email,
+      password,
     });
     if (res === 200) {
       navigate('/login');
@@ -38,11 +38,11 @@ const Register = () => {
             <div className="flex flex-col gap-3 my-4">
               <input
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={realName}
+                onChange={(e) => setRealName(e.target.value)}
                 placeholder="Name"
                 className={`px-4 py-3 border border-slate-300 rounded-lg placeholder:text-14 ${
-                  username !== '' ? 'border-primary' : 'focus:border-primary'
+                  realName !== '' ? 'border-primary' : 'focus:border-primary'
                 } `}
                 spellCheck={false}
                 required

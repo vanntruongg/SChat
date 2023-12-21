@@ -10,7 +10,7 @@ const userList = [
     email: 'vantruong@gmail.com',
   },
   {
-    userId: 1,
+    userId: 2,
     avatar:
       'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHx8MA%3D%3D',
     userName: 'vanturong123412313',
@@ -18,7 +18,7 @@ const userList = [
     email: 'vantruong@gmail.com',
   },
   {
-    userId: 1,
+    userId: 3,
     avatar:
       'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHx8MA%3D%3D',
     userName: 'vanturong123412313',
@@ -26,7 +26,7 @@ const userList = [
     email: 'vantruong@gmail.com',
   },
   {
-    userId: 1,
+    userId: 4,
     avatar:
       'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHx8MA%3D%3D',
     userName: 'vanturong123412313',
@@ -34,7 +34,7 @@ const userList = [
     email: 'vantruong@gmail.com',
   },
   {
-    userId: 1,
+    userId: 5,
     avatar:
       'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHx8MA%3D%3D',
     userName: 'vanturong123412313',
@@ -58,7 +58,7 @@ const Group = () => {
           </div>
         </form>
       </div>
-      <div className="flex flex-col gap-2 h-full overflow-y-auto scrollbar scrollbar-w-1 scrollbar-track-slate-300 scrollbar-track-rounded-md scrollbar-thumb-primary scrollbar-thumb-rounded-md">
+      <div className="flex flex-col gap-1 h-full overflow-y-auto scrollbar scrollbar-w-1 scrollbar-track-slate-300 scrollbar-track-rounded-md scrollbar-thumb-primary scrollbar-thumb-rounded-md">
         {userList.map(({ userId, avatar, groupName }) => (
           <div
             key={userId}

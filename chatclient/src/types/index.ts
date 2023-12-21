@@ -8,3 +8,9 @@ export type RegisterType = {
   email: string;
   password: string;
 };
+
+export type MessgaeSend = {
+  senderId: number;
+  chatId: number;
+  content: string;
+};

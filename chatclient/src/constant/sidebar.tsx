@@ -31,10 +31,4 @@ export const sidebarLinks = [
     title: 'group',
     icon: <UserGroupIcon className="w-5 h-5" />,
   },
-  {
-    id: 4,
-    link: '/connections',
-    title: 'connections',
-    icon: <UserPlusIcon className="w-5 h-5" />,
-  },
 ];

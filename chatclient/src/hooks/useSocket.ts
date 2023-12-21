@@ -1,19 +1,34 @@
-import { useEffect, useRef } from 'react';
-import { io, ManagerOptions, Socket, SocketOptions } from 'socket.io-client';
+import { useEffect, useState } from 'react';
+import io, { Socket } from 'socket.io-client';
+interface UseSocketProps {
+  chatId: string;
+}
 
-const useSocket = (
-  uri: string,
-  opts?: Partial<ManagerOptions & SocketOptions> | undefined,
-): Socket => {
-  const { current: socket } = useRef(io(uri, opts));
+const useSocket = ({ chatId }: UseSocketProps) => {
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
+    console.log('Socket userId: ', chatId);
+
+    const newSocket = io('http://localhost:8088', {
+      query: { chatId: chatId },
+    });
+    setSocket(newSocket);
+    newSocket.on('connect', () => {
+      console.log('Client connected');
+
+      const roomName = `private_room_${chatId}`;
+
+      // Tham gia phòng
+      newSocket.emit('joinRoom', { roomName });
+      console.log('client join room: ', roomName);
+    });
+
     return () => {
-      if (socket) {
-        socket.close();
-      }
+      console.log('Client disconnected');
+      newSocket.disconnect();
     };
-  }, [socket]);
+  }, [chatId]);
 
   return socket;
 };

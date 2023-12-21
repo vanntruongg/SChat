@@ -1,6 +1,7 @@
 import { LoginType, RegisterType } from '~/types/login';
 import { axiosClient } from './apis.service';
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 class AuthService {
   constructor() {}
@@ -62,9 +63,10 @@ class AuthService {
     }
   };
 
-  public resfreshToken = async (token: string) => {
+  public resfreshToken = async () => {
+    const token = this.getRefreshToken();
     try {
-      const res = axiosClient.post('/auth/refresh-token', token);
+      const res = await axios.post('/auth/refresh-token', token);
       console.log(res);
     } catch (err) {
       console.error('Refresh Token failed: ', err);

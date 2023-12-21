@@ -11,9 +11,9 @@ const Demo = () => {
     const socket = io('http://localhost:8088');
     setSocket(socket);
     // socket.on('connect', () => setConnected(true));
-    socket.on('read_message', (messagea: string) => {
+    socket.on('read_message', (message: string) => {
       // console.log('Received: ', message);
-      setMessageList((prevMessage) => [...prevMessage, messagea]);
+      setMessageList((prevMessage) => [...prevMessage, message]);
     });
     return () => {
       socket.disconnect();
