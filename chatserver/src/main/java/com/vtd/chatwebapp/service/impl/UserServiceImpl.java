@@ -2,13 +2,16 @@ package com.vtd.chatwebapp.service.impl;
 
 import com.vtd.chatwebapp.common.StringUtils;
 import com.vtd.chatwebapp.constant.MessageConstant;
+import com.vtd.chatwebapp.entity.Friend;
 import com.vtd.chatwebapp.entity.User;
+import com.vtd.chatwebapp.entity.dto.FriendResponse;
 import com.vtd.chatwebapp.entity.dto.RegisterRequest;
 import com.vtd.chatwebapp.exception.DuplicateException;
 import com.vtd.chatwebapp.exception.ErrorCode;
 import com.vtd.chatwebapp.exception.NotFoundException;
 import com.vtd.chatwebapp.repository.UserRepository;
 import com.vtd.chatwebapp.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,16 +49,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllFriend(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if(user.isPresent()) {
-            return  user.get().getFriends();
-        }
-        return Collections.emptyList();
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<User> getAllUserNotFriend(Long userId) {
+        return userRepository.findNotFriends(userId);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, MessageConstant.USER_NOT_FOUND));
+    }
+
+    @Override
+    @Transactional
+    public void setStatusUser(String email, boolean isOnline) {
+        try {
+            User user = userRepository.findByEmail(email).orElseThrow(() ->
+                    new NotFoundException(ErrorCode.NOT_FOUND, MessageConstant.USER_NOT_FOUND)
+            );
+            user.setOnline(isOnline);
+            userRepository.save(user);
+        } catch (NotFoundException ex) {
+            throw new NotFoundException(ErrorCode.NOT_FOUND, MessageConstant.USER_NOT_FOUND, ex.getCause());
+        }
     }
 }

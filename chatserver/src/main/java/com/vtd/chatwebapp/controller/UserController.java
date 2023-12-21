@@ -37,21 +37,31 @@ public class UserController {
                 .build());
     }
 
-    @GetMapping(USER_GET_BY_EMAIL)
-    public ResponseEntity<CommonResponse<Object>> getUserByEmail(@PathVariable("email") String email) {
+    @GetMapping(USER_GET_BY_ID)
+    public ResponseEntity<CommonResponse<Object>> getUserById(@PathVariable("id") Long userId) {
         return ResponseEntity.ok().body(CommonResponse.builder()
                         .isSuccess(true)
                         .message(MessageConstant.FIND_SUCCESS)
-                        .data(userService.getUserByEmail(email))
+                        .data(userService.getUserById(userId))
                 .build());
     }
-
-    @GetMapping(GET_ALL_FRIEND_BY_EMAIL)
-    public ResponseEntity<CommonResponse<Object>> getAllFriend(@PathVariable("email") String email) {
+    @GetMapping(USER_GET_BY_EMAIL)
+    public ResponseEntity<CommonResponse<Object>> getUserByEmail(@PathVariable("email") String email) {
         return ResponseEntity.ok().body(CommonResponse.builder()
                 .isSuccess(true)
                 .message(MessageConstant.FIND_SUCCESS)
-                .data(userService.getAllFriend(email))
+                .data(userService.getUserByEmail(email))
                 .build());
     }
+
+    @GetMapping(USER_GET_ALL_NOT_FRIEND)
+    public ResponseEntity<CommonResponse<Object>> getAllUserNotFriend(@PathVariable("id") Long userId) {
+        return ResponseEntity.ok().body(CommonResponse.builder()
+                .isSuccess(true)
+                .message(MessageConstant.FIND_SUCCESS)
+                .data(userService.getAllUserNotFriend(userId))
+                .build());
+    }
+
+
 }

@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails {
@@ -27,6 +28,14 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getEmail() {
         return user.getEmail();
+    }
+
+    public String getRealName() {
+        return user.getRealName();
+    }
+
+    public String getAvatar() {
+        return user.getAvatar();
     }
 
     @Override

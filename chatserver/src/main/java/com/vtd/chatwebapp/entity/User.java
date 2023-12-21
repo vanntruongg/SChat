@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,6 +29,10 @@ public class User extends BaseEntity  {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name = "is_online")
+    @Builder.Default
+    private boolean isOnline = Boolean.FALSE;
+
     @Column(name = "email", nullable = false, updatable = false, unique = true, length = 100)
     private String email;
 
@@ -35,14 +40,12 @@ public class User extends BaseEntity  {
     @JsonIgnore
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "friend",
-            joinColumns = @JoinColumn(name = "sender_id"),
-            inverseJoinColumns = @JoinColumn(name = "receiver_id")
-    )
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<User> friends;
+    private Set<Friend> sentFriendRequests = new HashSet<>();
 
-
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Friend> receivedFriendRequests = new HashSet<>();
 
 }

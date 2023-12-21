@@ -1,5 +1,6 @@
 package com.vtd.chatwebapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,12 +25,13 @@ public class Message extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "chat_id", referencedColumnName = "chat_id")
+    @JsonIgnore
     private Chat chat;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "create_at")
-    private Timestamp createdAt;
+    @Column(name = "sent_at")
+    private Timestamp sentAt;
+
 }

@@ -13,8 +13,6 @@ spring:
         show_sql: true
     hibernate:
       ddl-auto: update
-
-
 jwt:
   secret: "97c0c3367b199d00cc6234faf02e7747b22dc21115af1f355822d50abf48a1b01807985bcf5b192d5758ba8895e24ff9f69df2bc18a0e497e988838135658630"
   type: JWT
@@ -22,4 +20,8 @@ jwt:
   prefix: "Bearer "
   expire-time-access-token: 3600000         # 1h
   expire-time-refresh-token: 604800000      # 1 week
-
+logging:
+  file:
+    name: application.log
+#  level:
+#    root: debug

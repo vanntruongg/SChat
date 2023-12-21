@@ -1,5 +1,6 @@
 package com.vtd.chatwebapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class UserChat extends BaseEntity {
     @JoinColumn(name = "chat_id", referencedColumnName = "chat_id")
     private Chat chat;
 
-    @Column(name = "user_deleted", length = 10)
-    private String userDeleted;
+    @ManyToOne
+    @JoinColumn(name = "user_deleted")
+    private User userDeleted;
 }
