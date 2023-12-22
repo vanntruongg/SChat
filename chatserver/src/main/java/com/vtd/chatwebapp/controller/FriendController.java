@@ -2,6 +2,7 @@ package com.vtd.chatwebapp.controller;
 
 import com.vtd.chatwebapp.common.CommonResponse;
 import com.vtd.chatwebapp.constant.MessageConstant;
+import com.vtd.chatwebapp.entity.dto.DeleteFriendDto;
 import com.vtd.chatwebapp.entity.dto.FriendDto;
 import com.vtd.chatwebapp.enums.ConnectionStatus;
 import com.vtd.chatwebapp.service.FriendService;
@@ -26,21 +27,39 @@ public class FriendController {
                 .build());
     }
 
+    @PostMapping(CONFIRM_FRIEND_REQUEST)
+    public ResponseEntity<CommonResponse<Object>> confirmFriendRequest(@PathVariable("id") int friendId) {
+        return ResponseEntity.ok().body(CommonResponse.builder()
+                .isSuccess(true)
+                .message(MessageConstant.CANCEL_FRIEND_SUCCESS)
+                .data(friendService.confirmFriendRequest(friendId))
+                .build());
+    }
+
     @PostMapping(CANCEL_FRIEND_REQUEST)
     public ResponseEntity<CommonResponse<Object>> cancelFriendRequest(@PathVariable("id") int friendId) {
         return ResponseEntity.ok().body(CommonResponse.builder()
                 .isSuccess(true)
-                .message(MessageConstant.SENT_CANCEL_FRIEND_SUCCESS)
+                .message(MessageConstant.CANCEL_FRIEND_SUCCESS)
+                .data(friendService.cancelOrDeleteFriendRequest(friendId))
+                .build());
+    }
+
+    @PostMapping(DELETE_FRIEND_REQUEST)
+    public ResponseEntity<CommonResponse<Object>> deleteFriendRequest(@PathVariable("id") int friendId) {
+        return ResponseEntity.ok().body(CommonResponse.builder()
+                .isSuccess(true)
+                .message(MessageConstant.CANCEL_FRIEND_SUCCESS)
                 .data(friendService.cancelOrDeleteFriendRequest(friendId))
                 .build());
     }
 
     @PostMapping(DELETE_FRIEND)
-    public ResponseEntity<CommonResponse<Object>> deleteFriend(@PathVariable("id") int friendId) {
+    public ResponseEntity<CommonResponse<Object>> deleteFriend(@RequestBody DeleteFriendDto deleteFriendDto) {
         return ResponseEntity.ok().body(CommonResponse.builder()
                 .isSuccess(true)
-                .message(MessageConstant.SENT_DELETE_FRIEND_SUCCESS)
-                .data(friendService.cancelOrDeleteFriendRequest(friendId))
+                .message(MessageConstant.DELETE_FRIEND_SUCCESS)
+                .data(friendService.deleteFriend(deleteFriendDto))
                 .build());
     }
 

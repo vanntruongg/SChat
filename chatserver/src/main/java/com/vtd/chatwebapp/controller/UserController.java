@@ -24,27 +24,26 @@ public class UserController {
                 .message(MessageConstant.REGISTER_SUCCESS)
                 .data(userService.getAll())
                 .build());
-
-
     }
 
     @PostMapping(USER_CREATE)
     public ResponseEntity<CommonResponse<Object>> createUser(@RequestBody @Valid RegisterRequest registerRequest) {
         return ResponseEntity.ok().body(CommonResponse.builder()
-                        .isSuccess(true)
-                        .message(MessageConstant.REGISTER_SUCCESS)
-                        .data(userService.createUser(registerRequest))
+                .isSuccess(true)
+                .message(MessageConstant.REGISTER_SUCCESS)
+                .data(userService.createUser(registerRequest))
                 .build());
     }
 
     @GetMapping(USER_GET_BY_ID)
     public ResponseEntity<CommonResponse<Object>> getUserById(@PathVariable("id") Long userId) {
         return ResponseEntity.ok().body(CommonResponse.builder()
-                        .isSuccess(true)
-                        .message(MessageConstant.FIND_SUCCESS)
-                        .data(userService.getUserById(userId))
+                .isSuccess(true)
+                .message(MessageConstant.FIND_SUCCESS)
+                .data(userService.getUserById(userId))
                 .build());
     }
+
     @GetMapping(USER_GET_BY_EMAIL)
     public ResponseEntity<CommonResponse<Object>> getUserByEmail(@PathVariable("email") String email) {
         return ResponseEntity.ok().body(CommonResponse.builder()

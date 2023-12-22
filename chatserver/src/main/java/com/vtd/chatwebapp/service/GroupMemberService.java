@@ -1,12 +1,10 @@
 package com.vtd.chatwebapp.service;
 
+import com.vtd.chatwebapp.entity.Group;
 import com.vtd.chatwebapp.entity.GroupMember;
-
-import java.util.List;
+import com.vtd.chatwebapp.entity.User;
+import com.vtd.chatwebapp.enums.GroupRole;
 
 public interface GroupMemberService {
-
-    List<GroupMember> getAllGroupsNotJoined(Long userId);
-
-    List<GroupMember> getAllGroupsJoined(Long userId);
+    GroupMember createGroupMember(Group group, User user, GroupRole role);
 }

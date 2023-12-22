@@ -14,14 +14,14 @@ import static com.vtd.chatwebapp.constant.ApiEndpoint.MESSAGE_GET_ALL_BY_CHAT_ID
 @RestController
 @RequiredArgsConstructor
 public class MessageController {
-    private final MessageService messageService;
+  private final MessageService messageService;
 
-    @GetMapping(MESSAGE_GET_ALL_BY_CHAT_ID)
-    public ResponseEntity<CommonResponse<Object>> getAllMessageByChatId(@PathVariable("id") int chatId) {
-        return ResponseEntity.ok().body(CommonResponse.builder()
-                .isSuccess(true)
-                .message(MessageConstant.FIND_SUCCESS)
-                .data(messageService.getAllMessageByChatId(chatId))
-                .build());
-    }
+  @GetMapping(MESSAGE_GET_ALL_BY_CHAT_ID)
+  public ResponseEntity<CommonResponse<Object>> getAllMessageByChatId(@PathVariable("id") int chatId) {
+    return ResponseEntity.ok().body(CommonResponse.builder()
+            .isSuccess(true)
+            .message(MessageConstant.FIND_SUCCESS)
+            .data(messageService.getAllMessageByChatId(chatId))
+            .build());
+  }
 }

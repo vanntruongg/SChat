@@ -14,11 +14,17 @@ import java.util.Optional;
 @Repository
 public interface FriendRepository extends JpaRepository<Friend, Integer> {
 
-    Optional<Friend> findBySenderAndReceiverAndStatus(User sender, User receiver, FriendRequestStatus status);
+    @Query("select f from Friend f where (f.sender.userId = :user1Id and f.receiver.userId = :user2Id) " +
+            "or (f.sender.userId = :user2Id and f.receiver.userId = :user1Id)")
+    Optional<Friend> findBySenderOrReceiver(@Param("user1Id") Long user1Id, @Param("user2Id") Long user2Id);
 
     @Query("select f from Friend f " +
-            "where (f.sender.userId = :userId or f.receiver.userId = :userId) and f.status = com.vtd.chatwebapp.enums.FriendRequestStatus.PENDING")
-    List<Friend> findAllFriendRequest(@Param("userId") Long userId);
+            "where f.sender.userId = :userId and f.status = com.vtd.chatwebapp.enums.FriendRequestStatus.PENDING")
+    List<Friend> findAllFriendRequestSent(@Param("userId") Long userId);
+
+    @Query("select f from Friend f " +
+            "where f.receiver.userId = :userId and f.status = com.vtd.chatwebapp.enums.FriendRequestStatus.PENDING")
+    List<Friend> findAllFriendRequestReceived(@Param("userId") Long userId);
 
     @Query("select f from Friend f " +
             "where (f.sender.userId = :userId or f.receiver.userId = :userId) and f.status = com.vtd.chatwebapp.enums.FriendRequestStatus.ACCEPTED")

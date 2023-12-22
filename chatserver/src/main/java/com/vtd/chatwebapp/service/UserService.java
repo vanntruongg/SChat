@@ -20,4 +20,6 @@ public interface UserService {
     User getUserById(Long userId);
 
     void setStatusUser(String email, boolean isOnline);
+
+    List<User> getAllUserByIds(List<Long> ids);
 }

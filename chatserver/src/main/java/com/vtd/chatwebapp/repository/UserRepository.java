@@ -1,5 +1,6 @@
 package com.vtd.chatwebapp.repository;
 
+import com.vtd.chatwebapp.entity.Friend;
 import com.vtd.chatwebapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

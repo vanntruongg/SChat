@@ -1,4 +1,4 @@
-package com.vtd.chatwebapp.chat_socket;
+package com.vtd.chatwebapp.socket;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -12,21 +12,18 @@ import com.vtd.chatwebapp.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 @Component
 @Slf4j
 public class ChatServer {
     private final SocketIOServer server;
-    private final ConcurrentMap<Long, SocketIOClient> clientsByUserId;
 
     private final MessageService messageService;
+    private final UserSessionService userSessionService;
 
-    public ChatServer(SocketIOServer server, MessageService messageService) {
+    public ChatServer(SocketIOServer server, MessageService messageService, UserSessionService userSessionService) {
         this.server = server;
         this.messageService = messageService;
-        this.clientsByUserId = new ConcurrentHashMap<>();
+        this.userSessionService = userSessionService;
 
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
@@ -44,7 +41,9 @@ public class ChatServer {
 
     private ConnectListener onConnected() {
         return client -> {
-            printClientData(client);
+            String sessionId = client.getSessionId().toString();
+            String userId = extractUserIdFromHandshakeData(client);
+            userSessionService.putUserToSession(Long.parseLong(userId), sessionId);
             String roomName = generatePrivateRoomNameFromClient(client);
             client.joinRoom(roomName);
             System.out.println("Client connected room: " + roomName);
@@ -58,23 +57,13 @@ public class ChatServer {
         };
     }
 
+    private String extractUserIdFromHandshakeData(SocketIOClient client) {
+        return client.getHandshakeData().getSingleUrlParam("userId");
+    }
 
     private String generatePrivateRoomNameFromClient(SocketIOClient client) {
         String chatId =  client.getHandshakeData().getSingleUrlParam("chatId");
         return "private_room_" + chatId;
-    }
-
-    private Long getUserFromData(Long data) {
-        return null;
-    }
-
-    private SocketIOClient getClientByUserId(Long userId) {
-        return clientsByUserId.get(userId);
-    }
-
-    private void printClientData(SocketIOClient client) {
-        System.out.println("Client data: " + client.get("userId"));
-        // In các thông tin khác của client để kiểm tra dữ liệu
     }
 
 }

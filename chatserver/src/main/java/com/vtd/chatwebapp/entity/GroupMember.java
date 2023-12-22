@@ -1,5 +1,7 @@
 package com.vtd.chatwebapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vtd.chatwebapp.enums.GroupRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +20,7 @@ public class GroupMember extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "group_id")
+    @JsonIgnore
     private Group group;
 
     @ManyToOne
@@ -25,5 +28,5 @@ public class GroupMember extends BaseEntity {
     private User user;
 
     @Column(name = "role", nullable = false)
-    private String role;
+    private GroupRole role;
 }

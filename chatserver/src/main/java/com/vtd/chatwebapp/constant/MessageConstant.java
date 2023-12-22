@@ -25,12 +25,13 @@ public class MessageConstant {
     public static final String INVALID = "Invalid";
     public static final String NOT_FOUND = "Not found!";
     public static final String FRIEND_REQUEST = "friend request";
-    public static final String CANCEL_FRIEND_REQUEST = "cancel friend request";
-    public static final String DELETE_FRIEND_REQUEST = "delete friend";
+    public static final String CANCEL_FRIEND_REQUEST = "Cancel friend request";
+    public static final String DELETE_FRIEND_REQUEST = "Delete friend";
 
     // entity
     public static final String USER = "User";
     public static final String CHAT = "Chat";
+    public static final String GROUP = "Group";
 
 
     public static final String CREATE_SUCCESS = String.format(CHAR_SEQUENCE_2, CREATE, SUCCESS);
@@ -43,6 +44,12 @@ public class MessageConstant {
     public static final String CHAT_NOT_FOUND = String.format(CHAR_SEQUENCE_2, CHAT, NOT_FOUND);
 
     public static final String SENT_ADD_FRIEND_SUCCESS = String.format(CHAR_SEQUENCE_3, SENT, FRIEND_REQUEST, SUCCESS);
-    public static final String SENT_CANCEL_FRIEND_SUCCESS = String.format(CHAR_SEQUENCE_3, SENT, CANCEL_FRIEND_REQUEST, SUCCESS);
-    public static final String SENT_DELETE_FRIEND_SUCCESS = String.format(CHAR_SEQUENCE_3, SENT, DELETE_FRIEND_REQUEST, SUCCESS);
+    public static final String CANCEL_FRIEND_SUCCESS = String.format(CHAR_SEQUENCE_2, CANCEL_FRIEND_REQUEST, SUCCESS);
+    public static final String DELETE_FRIEND_SUCCESS = String.format(CHAR_SEQUENCE_2, DELETE_FRIEND_REQUEST, SUCCESS);
+    public static final String CREATE_GROUP_SUCCESS = String.format(CHAR_SEQUENCE_3, CREATE, GROUP, SUCCESS);
+
+    // notify
+    public static final String SENT_FRIEND_REQUEST = "has sent a friend request.";
+    public static final String ACCEPTED_FRIEND_REQUEST = "has accepted the friend request.";
+
 }

@@ -1,7 +1,12 @@
 package com.vtd.chatwebapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.vtd.chatwebapp.enums.TypeMessage;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +24,10 @@ public class Group extends BaseEntity {
     @Column(name = "group_name")
     private String groupName;
 
-    @OneToOne
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    @OneToMany(mappedBy = "group")
+    @JsonManagedReference
+    private List<GroupMember> groupMemberList = new ArrayList<>();
+
+    @Column(name = "type_message")
+    private TypeMessage typeMessage;
 }

@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, MessageConstant.USER_NOT_FOUND));
     }
 
+
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
@@ -75,5 +76,10 @@ public class UserServiceImpl implements UserService {
         } catch (NotFoundException ex) {
             throw new NotFoundException(ErrorCode.NOT_FOUND, MessageConstant.USER_NOT_FOUND, ex.getCause());
         }
+    }
+
+    @Override
+    public List<User> getAllUserByIds(List<Long> ids) {
+        return userRepository.findAllById(ids);
     }
 }
