@@ -1,34 +1,34 @@
 import { useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 interface UseSocketProps {
-  chatId: string;
+  userId: number;
 }
 
-const useSocket = ({ chatId }: UseSocketProps) => {
+const useSocket = ({ userId }: UseSocketProps) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    console.log('Socket userId: ', chatId);
+    console.log('Socket userId: ', userId);
 
     const newSocket = io('http://localhost:8088', {
-      query: { chatId: chatId },
+      query: { userId: userId },
     });
     setSocket(newSocket);
     newSocket.on('connect', () => {
       console.log('Client connected');
 
-      const roomName = `private_room_${chatId}`;
+      // const roomName = `private_room_${chatId}`;
 
       // Tham gia phòng
-      newSocket.emit('joinRoom', { roomName });
-      console.log('client join room: ', roomName);
+      // newSocket.emit('joinRoom', { roomName });
+      // console.log('client join room: ', roomName);
     });
 
     return () => {
       console.log('Client disconnected');
       newSocket.disconnect();
     };
-  }, [chatId]);
+  }, [userId]);
 
   return socket;
 };

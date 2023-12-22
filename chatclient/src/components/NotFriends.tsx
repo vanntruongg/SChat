@@ -1,73 +1,146 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import User from '../interfaces/user';
-import { RootState } from '../redux/store';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import userService from '../service/user.service';
-import AvatarDefault from '../assets/avatar_default.png';
+import { RootState } from '../redux/store';
+import { IFriend, IUser } from '../interfaces';
+import CardFriend from './CardFriend';
+import CardFriendRequestReceived from './CardFriendRequestReceived';
+import CardFriendRequestSent from './CardFriendRequestSent';
+import useSocket from '../hooks/useSocket';
+import { NotificationEvent } from '../enums';
 
 const NotFriends = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
-  const [users, setUsers] = useState<User[] | undefined>([]);
+  const { user: userLogin } = useSelector((state: RootState) => state.auth);
+
+  const [allUser, setAllUser] = useState<IUser[]>([]);
+  const [friendRequestSent, setriendRequestSent] = useState<IFriend[]>([]);
+  const [friendRequestReceived, setriendRequestReceived] = useState<IFriend[]>([]);
+
+  const socket = useSocket({ userId: userLogin.userId });
+
+  const fetchData = async () => {
+    try {
+      const [resFriendRequestSent, resFriendRequestReceived, resAllUser] = await Promise.all([
+        userService.getAllFriendRequestSent(userLogin.userId),
+        userService.getAllFriendRequestRecevied(userLogin.userId),
+        userService.getAllUserNotFriends(userLogin.userId),
+      ]);
+      setriendRequestSent(resFriendRequestSent);
+      setriendRequestReceived(resFriendRequestReceived);
+      setAllUser(resAllUser);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res: User[] | undefined = await userService.getAllUserNotFriends(
-        user?.userId,
-      );
-      setUsers(res);
-    };
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (socket) {
+      socket.on(NotificationEvent.FriendRequest, () => {
+        console.log('refresh-data 1');
+        fetchData();
+      });
+      socket.on(NotificationEvent.AcceptedFriendRequest, () => {
+        console.log('refresh-data 2');
+
+        fetchData();
+      });
+      socket.on(NotificationEvent.UnSentFriendRequest, () => {
+        console.log('refresh-data 3');
+
+        fetchData();
+      });
+      socket.on(NotificationEvent.DeletedFriendRequest, () => {
+        console.log('refresh-data 4');
+        fetchData();
+      });
+    }
+  }, [socket]);
+
   return (
     <div className="p-5 bg-secondary gap-4 h-full flex flex-col">
-      <div className="">
-        <h3 className="font-bold text-20 mb-2">Users</h3>
-        <form action="">
-          <div className="bg-white flex items-center justify-between rounded-full shadow-md overflow-hidden">
-            <input
-              type="text"
-              placeholder="Search @username"
-              className="text-14 py-2 px-3 w-full"
-            />
-            <MagnifyingGlassIcon className="w-5 h-5 mr-3" />
-          </div>
-        </form>
-      </div>
-      <div className="grid grid-cols-4 gap-4 p-5 overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-track-slate-300 scrollbar-track-rounded-md scrollbar-thumb-primary scrollbar-thumb-rounded-md">
-        {users?.map(({ userId, avatar, userName, realName }: User) => (
-          <div
-            key={userId}
-            className="flex flex-col bg-secondary border rounded-md"
-          >
-            <Link
-              to={`/${userName}`}
-              state={userId}
-              className="rounded-md overflow-hidden"
-            >
-              <img
-                src={avatar ?? AvatarDefault}
-                alt="avatar"
-                className="rounded-t-lg h-full hover:scale-105  transition-all duration-200"
-              />
-            </Link>
-            <div className="p-3 flex flex-col gap-3">
-              <div>
-                <Link
-                  to={`/${userName}`}
-                  className="text-quaternary font-semibold hover:underline hover:text-opacity-70"
-                >
-                  <span>{realName}</span>
-                </Link>
-              </div>
-              <button className="w-ful px-4 py-2 bg-primary text-14 text-secondary font-medium rounded-md hover:scale-[1.02] transition-all duration-100">
-                Add friend
-              </button>
+      <ToastContainer />
+      <div className="overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-track-slate-300 scrollbar-track-rounded-md scrollbar-thumb-primary scrollbar-thumb-rounded-md">
+        {/* Friend sent requests */}
+        {(friendRequestSent.length > 0 || friendRequestReceived?.length > 0) && (
+          <h2 className="text-24 font-bold">Friend requests</h2>
+        )}
+        {friendRequestSent.length > 0 && (
+          <div className="border-b p-5">
+            <div className="flex justify-between">
+              <h3 className="text-18">Sent requests</h3>
+              <Link
+                to={'/friends/request'}
+                className="p-1 rounded-sm text-primary hover:bg-tertiary hover:text-secondary transition-all duration-150"
+              >
+                <span className="text-14">See all</span>
+              </Link>
+            </div>
+            <div className="grid grid-cols-4 gap-4">
+              {friendRequestSent?.map((user: IFriend) => (
+                <CardFriendRequestSent
+                  key={user.friendId}
+                  friendId={user.friendId}
+                  user={user.friend}
+                  fetchData={fetchData}
+                />
+              ))}
             </div>
           </div>
-        ))}
+        )}
+        {/* Friend requests received */}
+        {friendRequestReceived?.length > 0 && (
+          <div className="border-b p-5 mb-5">
+            <div className="flex justify-between">
+              <h3 className="text-18">Recevied requests</h3>
+              <Link
+                to={'/friends/request'}
+                className="p-1 rounded-sm text-primary hover:bg-tertiary hover:text-secondary transition-all duration-150"
+              >
+                <span className="text-14">See all</span>
+              </Link>
+            </div>
+            <div className="grid grid-cols-4 gap-4">
+              {friendRequestReceived?.map((user: IFriend) => (
+                <CardFriendRequestReceived
+                  key={user.friendId}
+                  friendId={user.friendId}
+                  user={user.friend}
+                  fetchData={fetchData}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        {/* all user */}
+        {allUser.length > 0 && (
+          <>
+            <h2 className="text-24 font-bold">All user</h2>
+            <div className="p-5">
+              <div className="flex justify-between">
+                <h3 className="text-18">People you may know</h3>
+                <Link
+                  to={'/friends/suggestions'}
+                  className="p-1 rounded-sm text-primary hover:bg-tertiary hover:text-secondary transition-all duration-150"
+                >
+                  <span className="text-14">See all</span>
+                </Link>
+              </div>
+              <div className="grid grid-cols-4 gap-4">
+                {allUser?.map((user: IUser) => (
+                  <CardFriend key={user.userId} friend={user} fetchData={fetchData} />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -22,16 +22,12 @@ const Message = () => {
   }, []);
 
   return (
-    <div className="px-4 py-2 bg-secondary flex flex-col justify-between gap-4 h-full">
+    <div className="px-2 py-5 bg-secondary flex flex-col justify-between gap-4 h-full">
       <div className="">
         <h3 className="font-bold text-20 mb-2">Messages</h3>
         <form action="">
           <div className="bg-white flex items-center justify-between rounded-full shadow-md overflow-hidden">
-            <input
-              type="text"
-              placeholder="Search message"
-              className="text-14 py-2 px-3 w-full"
-            />
+            <input type="text" placeholder="Search message" className="text-14 py-2 px-3 w-full" />
             <MagnifyingGlassIcon className="w-5 h-5 mr-3" />
           </div>
         </form>
@@ -51,16 +47,10 @@ const Message = () => {
                 : 'bg-gray-100 hover:bg-gray-200'
             }`}
           >
-            <img
-              src={user.avatar ?? AvatarDefault}
-              alt=""
-              className="w-12 h-12 rounded-full"
-            />
+            <img src={user.avatar ?? AvatarDefault} alt="" className="w-12 h-12 rounded-full" />
             <div className="overflow-hidden">
               <h3>{user.realName}</h3>
-              <p className="text-14 whitespace-nowrap">
-                Lorem ipsum dolor sit amet consectetur
-              </p>
+              <p className="text-14 whitespace-nowrap">Lorem ipsum dolor sit amet consectetur</p>
             </div>
           </Link>
         ))}

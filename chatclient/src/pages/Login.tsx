@@ -41,7 +41,8 @@ const Login = () => {
       <div className="min-w-[360px] min-h-[60vh] p-5 flex flex-col items-stretch bg-secondary rounded-md shadow-sm">
         <div className="text-center">
           <h2 className="text-24 font-bold">
-            Welcome back <span className="text-primary">S</span>Chat
+            {/* Welcome back */}
+            <span className="text-primary">S</span>Chat
           </h2>
           <p className="text-14 italic text-gray-500">Login to continue</p>
         </div>
@@ -85,10 +86,7 @@ const Login = () => {
                 </button>
               </div>
               <div className="text-center">
-                <Link
-                  to={'/register'}
-                  className="text-14 text-gray-500 hover:text-primary"
-                >
+                <Link to={'/register'} className="text-14 text-gray-500 hover:text-primary">
                   Create a new account?
                 </Link>
               </div>

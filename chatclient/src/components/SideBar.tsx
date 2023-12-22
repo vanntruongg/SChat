@@ -71,6 +71,7 @@ const SideBar = () => {
               <li className="border-b">
                 <Link
                   to={`/${user?.userName}`}
+                  state={user?.userId}
                   className="block p-1 px-8 hover:bg-gray-200 rounded-t-md"
                 >
                   <span className="">Account</span>

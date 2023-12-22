@@ -14,3 +14,8 @@ export type MessgaeSend = {
   chatId: number;
   content: string;
 };
+
+export type FriendRequest = {
+  senderId: number;
+  receiverId: number;
+};

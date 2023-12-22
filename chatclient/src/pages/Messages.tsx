@@ -6,10 +6,10 @@ import { IMessage } from '~/interfaces';
 import { FormEvent, useEffect, useState } from 'react';
 import messageService from '../service/message.service';
 import { useSelector } from 'react-redux';
-import { RootState } from '~/redux/store';
-import useSocket from '../hooks/useSocket';
+import { RootState } from '../redux/store';
 import { MessgaeSend } from '../types';
 import { MessageActionsType } from '../enums';
+import useSocket from '../hooks/useSocket';
 
 const Messages = ({}) => {
   const { state } = useLocation();
@@ -17,7 +17,7 @@ const Messages = ({}) => {
   const { receiver, chatId } = state;
   const [message, setMessage] = useState<string | ''>('');
   const [messageList, setMessageList] = useState<IMessage[]>([]);
-  const socket = useSocket({ chatId: chatId });
+  const socket = useSocket({ userId: user.userId });
   // console.log(user);
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +36,7 @@ const Messages = ({}) => {
     }
   }, [socket]);
   // console.log(chats);
+
   const sendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (socket && message.trim() != '') {
@@ -55,11 +56,7 @@ const Messages = ({}) => {
       {/* header */}
       <header className="bg-quaternary flex justify-between items-center px-4 py-2 backdrop-blur-2xl shadow-xl">
         <div className="flex items-center gap-4">
-          <img
-            src={receiver.avatar}
-            alt="avatar"
-            className="w-10 h-10 rounded-full"
-          />
+          <img src={receiver.avatar} alt="avatar" className="w-10 h-10 rounded-full" />
           <div className="flex flex-col">
             <span className="text-">{receiver.realName}</span>
             {receiver.online && (
@@ -86,17 +83,11 @@ const Messages = ({}) => {
               <li key={message.messageId} className="">
                 {message.user.userId === user.userId ? (
                   <div className="flex justify-end my-0.5">
-                    <MessageSend
-                      message={message.content}
-                      time={message.sentAt}
-                    />
+                    <MessageSend message={message.content} time={message.sentAt} />
                   </div>
                 ) : (
                   <div className="flex my-0.5">
-                    <MessageReceive
-                      message={message.content}
-                      time={message.sentAt}
-                    />
+                    <MessageReceive message={message.content} time={message.sentAt} />
                   </div>
                 )}
               </li>

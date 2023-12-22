@@ -4,8 +4,15 @@ import { privateRoutes } from './routes';
 import MainLayout from './layouts/MainLayout';
 import Register from './pages/Register';
 import PrivateRoute from './routes/PrivateRoute';
+// import { SocketProvider } from './contexts/Socket/SocketContext';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/store';
+
 const App = () => {
+  const { user: userLogin } = useSelector((state: RootState) => state.auth);
+
   return (
+    // <SocketProvider userId={userLogin?.userId}>
     <Routes>
       <Route path="/" element={<Navigate to={'/login'} />} />
       <Route path="/register" element={<Register />} />
@@ -18,15 +25,14 @@ const App = () => {
             <Route
               key={route.path}
               path={route.path}
-              element={
-                <MainLayout rightPanel={rightPanel}>{children}</MainLayout>
-              }
+              element={<MainLayout rightPanel={rightPanel}>{children}</MainLayout>}
             />
           );
         })}
       </Route>
       <Route path="*" element={<Login />} />
     </Routes>
+    // </SocketProvider>
   );
 };
 

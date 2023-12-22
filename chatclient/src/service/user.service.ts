@@ -22,18 +22,14 @@ class UserService {
     try {
       const email = this.getEmailFromToken();
       if (email) {
-        const res: AxiosResponse = await axiosClient.get(
-          `/user/get/email/${email}`,
-        );
+        const res: AxiosResponse = await axiosClient.get(`/user/get/email/${email}`);
         return res.data.data;
       }
     } catch (error) {
       console.log('Get user by email error: ', error);
     }
   };
-  public getUserById = async (
-    userId: number | undefined,
-  ): Promise<IUser | undefined> => {
+  public getUserById = async (userId: number | undefined): Promise<IUser | undefined> => {
     try {
       const email = this.getEmailFromToken();
       if (email) {
@@ -45,29 +41,43 @@ class UserService {
     }
   };
 
-  public getAllUserNotFriends = async (
-    userId: number | undefined,
-  ): Promise<IUser[] | undefined> => {
+  public getAllUserNotFriends = async (userId: number): Promise<IUser[]> => {
     try {
-      const res: AxiosResponse = await axiosClient.get(
-        `/user/get/not/friends/${userId}`,
-      );
+      const res: AxiosResponse = await axiosClient.get(`/user/get/not/friends/${userId}`);
       return res.data.data;
     } catch (error) {
       console.log('Get all user not friend error:', error);
+      return [];
     }
   };
 
-  public getAllFriends = async (
-    userId: number | undefined,
-  ): Promise<IFriend[] | undefined> => {
+  public getAllFriends = async (userId: number): Promise<IFriend[]> => {
     try {
-      const res: AxiosResponse = await axiosClient.get(
-        `/user/get/friends/${userId}`,
-      );
+      const res: AxiosResponse = await axiosClient.get(`/friends/${userId}`);
       return res.data.data;
     } catch (error) {
       console.log('Get all friend error:', error);
+      return [];
+    }
+  };
+
+  public getAllFriendRequestSent = async (userId: number): Promise<IFriend[]> => {
+    try {
+      const res: AxiosResponse = await axiosClient.get(`/friends/request/sent/${userId}`);
+      return res.data.data;
+    } catch (error) {
+      console.log('Get all friend error:', error);
+      return [];
+    }
+  };
+
+  public getAllFriendRequestRecevied = async (userId: number): Promise<IFriend[]> => {
+    try {
+      const res: AxiosResponse = await axiosClient.get(`/friends/request/received/${userId}`);
+      return res.data.data;
+    } catch (error) {
+      console.log('Get all friend error:', error);
+      return [];
     }
   };
 }

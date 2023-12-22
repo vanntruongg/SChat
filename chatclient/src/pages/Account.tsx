@@ -1,13 +1,13 @@
 import AvatarDefault from '../assets/avatar_default.png';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import User from '../interfaces/user';
+import { IUser } from '../interfaces/index';
 import userService from '../service/user.service';
 
 const Account = () => {
   const { state } = useLocation();
   console.log(location.pathname.substring(1));
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<IUser | null>();
   const [friends, setFriends] = useState<number>(0);
   const [groups, setGroups] = useState<number>(0);
   useEffect(() => {

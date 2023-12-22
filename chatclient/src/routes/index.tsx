@@ -22,6 +22,6 @@ export const privateRoutes = [
   {
     path: '/:userName',
     mainElement: <User />,
-    rightPanel: <Group />,
+    rightPanel: <Friends />,
   },
 ];
