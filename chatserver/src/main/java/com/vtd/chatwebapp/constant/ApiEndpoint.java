@@ -30,6 +30,7 @@ public class ApiEndpoint {
     public static final String CANCEL = "/cancel";
     public static final String DELETE = "/delete";
     public static final String RECEIVED = "/received";
+    public static final String STATUS = "/status";
     public static final String REFRESH_TOKEN = "/refresh-token";
 
     public static final String USER = "/user";
@@ -48,7 +49,9 @@ public class ApiEndpoint {
     public static final String USER_GET_BY_ID = USER + GET + ID_PARAM;
     public static final String GET_ALL_FRIEND_BY_ID = FRIENDS + ID_PARAM;
     public static final String USER_GET_ALL_NOT_FRIEND = USER + GET + NOT + FRIENDS + ID_PARAM;
+    public static final String USER_GET_AND_FRIEND_STATUS = USER + GET + FRIEND + STATUS;
     public static final String GROUP_CREATE = GROUP + CREATE;
+    public static final String GET_OR_CREATE_PRIVATE_CHAT = GET + CREATE + PRIVATE + CHAT;
     public static final String GROUPS_JOINED = GROUPS + JOINED + ID_PARAM;
     public static final String GROUPS_NOT_JOINED = GROUPS + NOT + JOINED + ID_PARAM;
     public static final String CHATS_PRIVATE = CHATS + PRIVATE + ID_PARAM;

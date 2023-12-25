@@ -6,7 +6,6 @@ import com.vtd.chatwebapp.entity.GroupMember;
 import com.vtd.chatwebapp.entity.User;
 import com.vtd.chatwebapp.entity.dto.GroupDto;
 import com.vtd.chatwebapp.enums.GroupRole;
-import com.vtd.chatwebapp.enums.TypeMessage;
 import com.vtd.chatwebapp.exception.ErrorCode;
 import com.vtd.chatwebapp.exception.NotFoundException;
 import com.vtd.chatwebapp.repository.GroupRepository;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -39,8 +37,6 @@ public class GroupServiceImpl implements GroupService {
 
       Group group = new Group();
       group.setGroupName(groupDto.getGroupName());
-      group.setTypeMessage(TypeMessage.GROUP);
-
       Group groupSave = groupRepository.save(group);
 
       User leader = userRepository.findById(groupDto.getLeaderId()).orElseThrow(() ->
@@ -62,43 +58,6 @@ public class GroupServiceImpl implements GroupService {
     } catch (Exception exception) {
       throw new RuntimeException("Failed to create group", exception);
     }
-  }
-
-  @Override
-  @Transactional
-  public Group createPrivateChat(Long user1Id, Long user2Id) {
-    try {
-      Optional<User> user1Existed = userRepository.findById(user1Id);
-      Optional<User> user2Existed = userRepository.findById(user2Id);
-      if (user1Existed.isPresent() && user2Existed.isPresent()) {
-        Group group = new Group();
-        group.setTypeMessage(TypeMessage.PRIVATE);
-
-        Group groupSave = groupRepository.save(group);
-
-        List<GroupMember> groupMemberList = new ArrayList<>();
-        groupMemberList.add(groupMemberService.createGroupMember(groupSave, user1Existed.get(), GroupRole.MEMBER));
-        groupMemberList.add(groupMemberService.createGroupMember(groupSave, user2Existed.get(), GroupRole.MEMBER));
-
-        groupSave.setGroupMemberList(groupMemberList);
-
-        return groupRepository.save(groupSave);
-      } else {
-        throw new NotFoundException(ErrorCode.NOT_FOUND, MessageConstant.USER_NOT_FOUND);
-      }
-    } catch (Exception exception) {
-      throw new RuntimeException("Failed to create private chat", exception);
-    }
-  }
-
-  @Override
-  public List<Group> getAllPrivateChat(Long userId) {
-    return groupRepository.findAllPrivateChat(userId);
-  }
-
-  @Override
-  public List<Group> getAllGroupChat(Long userId) {
-    return groupRepository.findAllGroupChat(userId);
   }
 
   @Override

@@ -24,6 +24,11 @@ public class Message extends BaseEntity {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "private_chat_id", referencedColumnName = "private_chat_id")
+    @JsonIgnore
+    private PrivateChat privateChat;
+
+    @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "group_id")
     @JsonIgnore
     private Group group;

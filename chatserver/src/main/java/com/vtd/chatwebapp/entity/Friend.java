@@ -1,7 +1,6 @@
 package com.vtd.chatwebapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vtd.chatwebapp.enums.FriendRequestStatus;
+import com.vtd.chatwebapp.enums.FriendStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +26,6 @@ public class Friend extends BaseEntity {
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    private FriendRequestStatus status;
+    private FriendStatus status;
 
 }

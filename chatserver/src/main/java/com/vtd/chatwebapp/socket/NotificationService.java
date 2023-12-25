@@ -17,6 +17,7 @@ public class NotificationService {
   public void sendNotificationHandleFriend(String eventName, Long userId, String message) {
     String sessionId = userSessionService.getSessionIdByUserId(userId);
     if(sessionId != null) {
+      System.out.println("sessionId" + sessionId);
       System.out.println("send event: " +  eventName);
       System.out.println("send event to user: " +  userId);
       server.getClient(UUID.fromString(sessionId)).sendEvent(eventName, message);

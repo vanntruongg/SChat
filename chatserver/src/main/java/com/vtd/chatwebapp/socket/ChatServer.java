@@ -44,6 +44,7 @@ public class ChatServer {
             String sessionId = client.getSessionId().toString();
             String userId = extractUserIdFromHandshakeData(client);
             userSessionService.putUserToSession(Long.parseLong(userId), sessionId);
+            System.out.println("Client connected with userId: " + userId);
             String roomName = generatePrivateRoomNameFromClient(client);
             client.joinRoom(roomName);
             System.out.println("Client connected room: " + roomName);
@@ -53,7 +54,11 @@ public class ChatServer {
     private DisconnectListener onDisconnected() {
         return client -> {
             String privateRoom = generatePrivateRoomNameFromClient(client);
+            String userId = extractUserIdFromHandshakeData(client);
+            userSessionService.removeUserSession(Long.parseLong(userId));
             System.out.println("Client disconnected room: " + privateRoom);
+            System.out.println("Client disconnected with userId: " + userId);
+
         };
     }
 

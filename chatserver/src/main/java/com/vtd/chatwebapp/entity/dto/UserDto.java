@@ -1,14 +1,17 @@
 package com.vtd.chatwebapp.entity.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.vtd.chatwebapp.entity.User;
+import com.vtd.chatwebapp.enums.FriendStatus;
+import lombok.*;
 
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
-    private Long userId;
-    private String userName;
-    private String email;
+    private User user;
+    private FriendStatus friendStatus;
+    private int friendId;
+    private boolean isSender;
 }

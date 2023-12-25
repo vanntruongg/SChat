@@ -14,9 +14,4 @@ public interface GroupService {
 
     boolean createGroup(GroupDto groupDto);
 
-    Group createPrivateChat(Long user1, Long user2);
-
-    List<Group> getAllPrivateChat(Long userId);
-
-    List<Group> getAllGroupChat(Long userId);
 }

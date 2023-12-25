@@ -54,14 +54,14 @@ public class FriendController {
                 .build());
     }
 
-    @PostMapping(DELETE_FRIEND)
-    public ResponseEntity<CommonResponse<Object>> deleteFriend(@RequestBody DeleteFriendDto deleteFriendDto) {
-        return ResponseEntity.ok().body(CommonResponse.builder()
-                .isSuccess(true)
-                .message(MessageConstant.DELETE_FRIEND_SUCCESS)
-                .data(friendService.deleteFriend(deleteFriendDto))
-                .build());
-    }
+//    @PostMapping(DELETE_FRIEND)
+//    public ResponseEntity<CommonResponse<Object>> deleteFriend(@RequestBody DeleteFriendDto deleteFriendDto) {
+//        return ResponseEntity.ok().body(CommonResponse.builder()
+//                .isSuccess(true)
+//                .message(MessageConstant.DELETE_FRIEND_SUCCESS)
+//                .data(friendService.deleteFriend(deleteFriendDto))
+//                .build());
+//    }
 
     @GetMapping(GET_ALL_FRIEND_BY_ID)
     public ResponseEntity<CommonResponse<Object>> getAllFriend(@PathVariable("id") Long userId) {

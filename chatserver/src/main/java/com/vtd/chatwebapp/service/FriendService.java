@@ -16,7 +16,7 @@ public interface FriendService {
     List<FriendResponse> getAllFriendRequest(Long userId, ConnectionStatus status);
 
     boolean cancelOrDeleteFriendRequest(int friendId);
-    boolean deleteFriend(DeleteFriendDto deleteFriendDto);
+//    boolean deleteFriend(DeleteFriendDto deleteFriendDto);
 
     boolean confirmFriendRequest(int friendId);
 }

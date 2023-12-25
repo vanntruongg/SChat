@@ -19,11 +19,4 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
             "where :userId not in (select gm.user.userId from GroupMember gm)")
     List<Group> findAllGroupNotJoinedByUserId(Long userId);
 
-    @Query("select g from Group g " +
-            "where :userId in (select gm.user.userId from GroupMember gm) and g.typeMessage = com.vtd.chatwebapp.enums.TypeMessage.PRIVATE")
-    List<Group> findAllPrivateChat(Long userId);
-
-    @Query("select g from Group g " +
-            "where :userId in (select gm.user.userId from GroupMember gm) and g.typeMessage = com.vtd.chatwebapp.enums.TypeMessage.GROUP")
-    List<Group> findAllGroupChat(Long userId);
 }

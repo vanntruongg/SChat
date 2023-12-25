@@ -6,8 +6,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum FriendRequestStatus {
+public enum FriendStatus {
     PENDING("Pending"),
-    ACCEPTED("Accepted");
+    ACCEPTED("Accepted"),
+    NOT_FRIEND("Not a friend");
     private final String status;
 }

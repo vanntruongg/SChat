@@ -40,12 +40,4 @@ public class User extends BaseEntity  {
     @JsonIgnore
     private String password;
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Friend> sentFriendRequests = new HashSet<>();
-
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Friend> receivedFriendRequests = new HashSet<>();
-
 }
