@@ -1,27 +1,38 @@
-import Friends from '../components/Friends';
-import NotFriends from '../components/NotFriends';
 import UserOnline from '../components/UserOnline';
 import Messages from '../pages/Messages';
 import SChat from '../pages/SChat';
 import Group from '../components/Group';
-import Message from '../components/Message';
+import ListMessage from '../components/message/ListMessage';
 import Account from '../pages/Account';
 import User from '../pages/User';
+import SidebarFriend from '../components/SidebarFriend';
+import ListFriend from '../components/friend/ListFriend';
+import FriendRequest from '../components/friend/FriendRequest';
+import Suggestions from '../components/friend/Suggesstions';
+import StartMessage from '../components/StartMessage';
 
 export const privateRoutes = [
-  { path: '/schat', mainElement: <SChat />, rightPanel: <UserOnline /> },
-  { path: '/messages', mainElement: <SChat />, rightPanel: <Message /> },
-  { path: '/friends', mainElement: <NotFriends />, rightPanel: <Friends /> },
-  { path: '/groups', mainElement: <Group />, rightPanel: <Group /> },
-  { path: '/account', mainElement: <Account />, rightPanel: <Message /> },
+  { path: '/schat', mainElement: <SChat />, sidebar: <UserOnline /> },
+  { path: '/messages', mainElement: <StartMessage />, sidebar: <ListMessage /> },
+  { path: '/friends', mainElement: <SChat />, sidebar: <SidebarFriend /> },
+  { path: '/groups', mainElement: <Group />, sidebar: <Group /> },
+  { path: '/account', mainElement: <Account />, sidebar: <ListMessage /> },
+  { path: '/friends/list', mainElement: <ListFriend />, sidebar: <SidebarFriend /> },
+  { path: '/friends/requests', mainElement: <FriendRequest />, sidebar: <SidebarFriend /> },
+  { path: '/friends/find', mainElement: <Suggestions />, sidebar: <SidebarFriend /> },
   {
-    path: '/messages/chat/:chatId',
+    path: '/messages/c/:chatId',
     mainElement: <Messages />,
-    rightPanel: <Message />,
+    sidebar: <ListMessage />,
   },
   {
     path: '/:userName',
     mainElement: <User />,
-    rightPanel: <Friends />,
+    sidebar: <SidebarFriend />,
+  },
+  {
+    path: '/account/:userName',
+    mainElement: <Account />,
+    sidebar: <UserOnline />,
   },
 ];

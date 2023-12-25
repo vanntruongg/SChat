@@ -40,14 +40,14 @@ const Login = () => {
       <ToastContainer />
       <div className="min-w-[360px] min-h-[60vh] p-5 flex flex-col items-stretch bg-secondary rounded-md shadow-sm">
         <div className="text-center">
-          <h2 className="text-24 font-bold">
+          <h2 className="text-24 font-bold text-secondary dark:text-tertiary">
             {/* Welcome back */}
             <span className="text-primary">S</span>Chat
           </h2>
           <p className="text-14 italic text-gray-500">Login to continue</p>
         </div>
         <form action="" onSubmit={handleLogin} className="flex flex-1">
-          <div className="w-full flex flex-col justify-between">
+          <div className="w-full flex flex-col justify-between text-secondary dark:text-tertiary">
             <div className="flex flex-col gap-3 my-4">
               <input
                 type="email"

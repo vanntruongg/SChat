@@ -1,3 +1,5 @@
+import { FriendStatus } from '../enums';
+
 export interface IUser {
   userId: number;
   avatar: string;
@@ -12,14 +14,19 @@ export interface IFriend {
   friend: IUser;
 }
 
+export const isIFriend = (user: IFriend | IUser): user is IFriend => {
+  return (user as IFriend).friendId !== undefined;
+};
+
 export interface Chat {
   chatId: number;
 }
 
-export interface UserChat {
-  chat: Chat;
+export interface UserFriendStatus {
   user: IUser;
-  userChatId: number;
+  friendStatus: FriendStatus;
+  friendId: number;
+  sender: boolean;
 }
 
 export interface IMessage {
@@ -27,4 +34,10 @@ export interface IMessage {
   user: IUser;
   content: string;
   sentAt: string;
+}
+
+export interface PrivateChat {
+  privateChatId: number;
+  sender: IUser;
+  receiver: IUser;
 }

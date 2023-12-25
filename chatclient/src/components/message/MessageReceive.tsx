@@ -1,4 +1,4 @@
-import { formatLongToTime } from '../utils/dateTimeUtils';
+import { formatLongToTime } from '../../utils/dateTimeUtils';
 
 interface MessageProps {
   message: string;

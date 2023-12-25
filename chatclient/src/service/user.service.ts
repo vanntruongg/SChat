@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import authService from './auth.service';
 import { axiosClient } from './apis.service';
-import { IUser, IFriend } from '../interfaces/index';
+import { IUser, IFriend, UserFriendStatus } from '../interfaces/index';
 import { AxiosResponse } from 'axios';
 
 class UserService {
@@ -41,7 +41,7 @@ class UserService {
     }
   };
 
-  public getAllUserNotFriends = async (userId: number): Promise<IUser[]> => {
+  public getAllUserNotFriends = async (userId: number | undefined): Promise<IUser[]> => {
     try {
       const res: AxiosResponse = await axiosClient.get(`/user/get/not/friends/${userId}`);
       return res.data.data;
@@ -51,7 +51,7 @@ class UserService {
     }
   };
 
-  public getAllFriends = async (userId: number): Promise<IFriend[]> => {
+  public getAllFriends = async (userId: number | undefined): Promise<IFriend[]> => {
     try {
       const res: AxiosResponse = await axiosClient.get(`/friends/${userId}`);
       return res.data.data;
@@ -61,7 +61,7 @@ class UserService {
     }
   };
 
-  public getAllFriendRequestSent = async (userId: number): Promise<IFriend[]> => {
+  public getAllFriendRequestSent = async (userId: number | undefined): Promise<IFriend[]> => {
     try {
       const res: AxiosResponse = await axiosClient.get(`/friends/request/sent/${userId}`);
       return res.data.data;
@@ -71,13 +71,27 @@ class UserService {
     }
   };
 
-  public getAllFriendRequestRecevied = async (userId: number): Promise<IFriend[]> => {
+  public getAllFriendRequestRecevied = async (userId: number | undefined): Promise<IFriend[]> => {
     try {
       const res: AxiosResponse = await axiosClient.get(`/friends/request/received/${userId}`);
       return res.data.data;
     } catch (error) {
       console.log('Get all friend error:', error);
       return [];
+    }
+  };
+  public getUserAndFriendStatus = async (
+    senderId: number,
+    receiverId: number,
+  ): Promise<UserFriendStatus | null> => {
+    try {
+      const res: AxiosResponse = await axiosClient.get(
+        `/user/get/friend/status?senderId=${senderId}&receiverId=${receiverId}`,
+      );
+      return res.data.data;
+    } catch (error) {
+      console.log('Get all friend error:', error);
+      return null;
     }
   };
 }

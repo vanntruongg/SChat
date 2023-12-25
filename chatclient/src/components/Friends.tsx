@@ -12,7 +12,7 @@ import AvatarDefault from '../assets/avatar_default.png';
 const Friend = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const [friends, setFriends] = useState<IFriend[] | undefined>([]);
-  const socket = useSocket({ userId: user.userId });
+  const socket = useSocket({ userId: user?.userId ?? 0 });
   // const { state } = useLocation();
   // const { receiver, chatId } = state;
   const fetchData = async () => {
@@ -25,15 +25,21 @@ const Friend = () => {
 
   useEffect(() => {
     if (socket) {
+      socket.connect();
       socket.on(NotificationEvent.AcceptedFriendRequest, () => {
         fetchData();
       });
     }
+    return () => {
+      if (socket && socket.connected) {
+        socket.disconnect();
+      }
+    };
   });
 
   return (
-    <div className="px-2 py-5 bg-secondary flex flex-col justify-between gap-4 h-full">
-      <div className="">
+    <div className="flex flex-col justify-between gap-4 h-full">
+      {/* <div className="">
         <h3 className="font-bold text-20 mb-2">Friends</h3>
         <form action="">
           <div className="bg-white flex items-center justify-between rounded-full shadow-md overflow-hidden">
@@ -41,7 +47,7 @@ const Friend = () => {
             <MagnifyingGlassIcon className="w-5 h-5 mr-3" />
           </div>
         </form>
-      </div>
+      </div> */}
       <div className="flex flex-col gap-1 h-full overflow-y-auto scrollbar scrollbar-w-1 scrollbar-track-slate-300 scrollbar-track-rounded-md scrollbar-thumb-primary scrollbar-thumb-rounded-md">
         {friends?.map(({ friendId, friend }: IFriend) => (
           <Link

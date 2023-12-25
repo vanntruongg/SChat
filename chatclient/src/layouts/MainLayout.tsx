@@ -1,19 +1,20 @@
 import { FC, ReactNode } from 'react';
-import SideBar from '../components/SideBar';
+import Sidebar from './Sidebar';
 
 interface MainLayoutProps {
   children: ReactNode;
-  rightPanel: ReactNode;
+  sidebar: ReactNode;
 }
 
-const MainLayout: FC<MainLayoutProps> = ({ children, rightPanel }) => {
+const MainLayout: FC<MainLayoutProps> = ({ children, sidebar }) => {
   return (
     <div className="grid grid-cols-12 min-h-screen">
-      <div className="col-span-2">
-        <SideBar />
+      <div className="col-span-4">
+        <Sidebar sidebar={sidebar} />
       </div>
-      <div className="col-span-7 h-screen">{children}</div>
-      <div className="col-span-3 h-screen">{rightPanel}</div>
+      <div className="col-span-8 h-screen overflow-y-auto bg-tertiary text-secondary border-l scrollbar scrollbar-w-1 scrollbar-track-slate-300 scrollbar-track-rounded-md scrollbar-thumb-primary scrollbar-thumb-rounded-md">
+        {children}
+      </div>
     </div>
   );
 };

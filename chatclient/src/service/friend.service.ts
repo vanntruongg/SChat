@@ -37,18 +37,6 @@ class FriendService {
       console.error(error);
     }
   };
-
-  public deleteFriend = async (user1Id: number, user2Id: number) => {
-    const formData = new FormData();
-    formData.append('user1Id', user1Id.toString());
-    formData.append('user2Id', user2Id.toString());
-    try {
-      const res = await axiosClient.post(`/delete/friend`, formData);
-      return res.data.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
 }
 
 export default new FriendService();

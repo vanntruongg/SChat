@@ -9,9 +9,10 @@ export type RegisterType = {
   password: string;
 };
 
-export type MessgaeSend = {
+export type MessageSend = {
   senderId: number;
-  chatId: number;
+  privateChatId?: number;
+  groupId?: number;
   content: string;
 };
 

@@ -1,10 +1,7 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 const UserOnline = () => {
   return (
-    <div className="px-2 py-5 bg-secondary h-full flex flex-col gap-6">
-      <div className="font-bold text-20">
-        <h3>Message</h3>
-      </div>
+    <div className="px-2 py-5 h-full flex flex-col gap-6">
       <div className="grid grid-cols-4 gap-3">
         <div className="bg-primary bg-opacity-90 p-1 flex flex-col items-center justify-center rounded-xl relative">
           <span className="absolute top-0 right-0 w-3 h-3 bg-green-600 rounded-full"></span>

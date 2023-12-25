@@ -4,8 +4,31 @@ export enum MessageActionsType {
 }
 
 export enum NotificationEvent {
-  FriendRequest = 'notification_friend_request',
-  AcceptedFriendRequest = 'notification_accepted_friend_request',
-  UnSentFriendRequest = 'notification_unsent_friend_request',
-  DeletedFriendRequest = 'notification_delete_friend_request',
+  Notification = 'notification',
+  NewMessage = 'new_message',
+  NewFriend = 'new_friend',
+}
+
+export enum TypeUser {
+  Friend = 'friend',
+  FriendRequestSent = 'friend_request_sent',
+  FriendRequestReceived = 'friend_request_received',
+  User = 'user',
+}
+
+export enum SidebarType {
+  AllFriend = 'All Friends',
+  FriendRequests = 'Friend Requests',
+  Suggestions = 'Suggestions',
+}
+
+export enum FriendStatus {
+  Accepted = 'ACCEPTED',
+  Pending = 'PENDING',
+  NotFriend = 'NOT_FRIEND',
+}
+
+export enum ChatType {
+  Private = 'private',
+  Group = 'group',
 }
