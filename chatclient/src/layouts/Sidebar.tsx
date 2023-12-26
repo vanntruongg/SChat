@@ -13,7 +13,7 @@ const Sidebar = ({ sidebar }: SidebarProps) => {
       <LogoApp />
       <div className="flex h-full my-2">
         <NavBar />
-        <div className="flex-1">{sidebar}</div>
+        <div className="flex-1 w-full z-50">{sidebar}</div>
       </div>
       <div className="">
         <UserInfor />

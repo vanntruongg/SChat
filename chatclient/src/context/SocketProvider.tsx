@@ -1,11 +1,11 @@
 import React, { ReactNode, createContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useSocket from '../hooks/useSocket';
 import { RootState } from '../redux/store';
 import { Socket } from 'socket.io-client';
-import { NotificationEvent } from '../enums';
+import { SocketEvents } from '../enums';
 import { ToastContainer, toast } from 'react-toastify';
 import { receiveNotification } from '../redux/actions';
+import useSocket from '../hooks/useSocket';
 
 interface SocketProviderProps {
   children: ReactNode;
@@ -21,9 +21,13 @@ const SocketProvider = ({ children }: SocketProviderProps) => {
     if (socket) {
       socket.connect();
       console.log('connect ');
-      socket.on(NotificationEvent.NewFriend, (notification) => {
+      socket.on(SocketEvents.NEW_FRIEND, (notification) => {
         console.log(notification);
-
+        dispatch(receiveNotification(notification));
+        toast(notification);
+      });
+      socket.on(SocketEvents.NEW_MESSAGE, (notification) => {
+        console.log(notification);
         dispatch(receiveNotification(notification));
         toast(notification);
       });

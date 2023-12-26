@@ -46,13 +46,9 @@ const User = () => {
   // console.log(friendStatus);
   const handleSendMessage = async () => {
     if (userLogin) {
-      const res = await chatService.createPrivateChat(userLogin?.userId, user.userId);
-      if (res) {
-        const receiver: IUser = userLogin.userId === res.sender.userId ? res.receiver : res.sender;
-        navigate(`/messages/c/${res.privateChatId}`, {
-          state: { chatId: res.privateChatId, receiver: receiver, type: ChatType.Private },
-        });
-      }
+      navigate(`/messages/c/${user.userId}`, {
+        state: { receiver: user, type: ChatType.Private },
+      });
     }
   };
 
@@ -85,9 +81,9 @@ const User = () => {
             )}
             {friendStatus === FriendStatus.Pending ? (
               sender ? (
-                <ButtonFriendRequestReceived userId={user.userId} fetchData={fetchData} />
+                <ButtonFriendRequestReceived userId={friendId} fetchData={fetchData} />
               ) : (
-                <ButtonFriendRequestSent userId={user.userId} fetchData={fetchData} />
+                <ButtonFriendRequestSent userId={friendId} fetchData={fetchData} />
               )
             ) : (
               <></>

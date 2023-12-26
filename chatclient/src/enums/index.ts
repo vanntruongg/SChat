@@ -1,12 +1,11 @@
-export enum MessageActionsType {
-  SendMessage = 'send_message',
-  ReadMessage = 'read_message',
-}
-
-export enum NotificationEvent {
-  Notification = 'notification',
-  NewMessage = 'new_message',
-  NewFriend = 'new_friend',
+export enum SocketEvents {
+  SEND_PRIVATE_MESSAGE = 'send_private_message',
+  READ_PRIVATE_MESSAGE = 'read_private_message',
+  SEND_GROUP_MESSAGE = 'send_group_message',
+  READ_GROUP_MESSAGE = 'read_group_message',
+  NEW_MESSAGE = 'new_message',
+  NEW_FRIEND = 'new_friend',
+  NOTIFICATION = 'notification',
 }
 
 export enum TypeUser {

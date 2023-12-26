@@ -8,6 +8,8 @@ interface ButtonFriendRequestSent {
 const ButtonFriendRequestSent: React.FC<ButtonFriendRequestSent> = ({ userId, fetchData }) => {
   const handleCancelFriendRequest = async (friendId: number) => {
     await friendService.cancelFriendRequest(friendId);
+    console.log(123123);
+
     fetchData();
   };
   return (

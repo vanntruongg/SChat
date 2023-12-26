@@ -9,6 +9,12 @@ export interface IUser {
   online: boolean;
 }
 
+export interface IGroup {
+  groupId: number;
+  groupName: string;
+  member: IUser[];
+}
+
 export interface IFriend {
   friendId: number;
   friend: IUser;
@@ -29,9 +35,10 @@ export interface UserFriendStatus {
   sender: boolean;
 }
 
-export interface IMessage {
+export interface IMessageResponse {
   messageId: number;
   user: IUser;
+  chatId: number;
   content: string;
   sentAt: string;
 }

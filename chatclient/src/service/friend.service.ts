@@ -7,7 +7,7 @@ class FriendService {
     formData.append('receiverId', receiverId.toString());
     try {
       const res = await axiosClient.post('/friend/request', formData);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       console.error(error);
     }
@@ -16,7 +16,7 @@ class FriendService {
   public confirmFriendRequest = async (friendId: number) => {
     try {
       const res = await axiosClient.post(`/confirm/friend/request/${friendId}`);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       console.error(error);
     }
@@ -24,7 +24,7 @@ class FriendService {
   public cancelFriendRequest = async (friendId: number) => {
     try {
       const res = await axiosClient.post(`/cancel/friend/request/${friendId}`);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       console.error(error);
     }
@@ -32,7 +32,7 @@ class FriendService {
   public deleteFriendRequest = async (friendId: number) => {
     try {
       const res = await axiosClient.post(`/delete/friend/request/${friendId}`);
-      return res.data;
+      return res.data.data;
     } catch (error) {
       console.error(error);
     }

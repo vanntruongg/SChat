@@ -9,7 +9,7 @@ import { IFriend, IUser } from '../../interfaces';
 import CardFriendRequestReceived from '../CardFriendRequestReceived';
 import CardFriendRequestSent from '../CardFriendRequestSent';
 import useSocket from '../../hooks/useSocket';
-import { NotificationEvent, SidebarType, TypeUser } from '../../enums';
+import { SocketEvents, SidebarType, TypeUser } from '../../enums';
 import { receiveNotification } from '../../redux/actions';
 import ListUser from './ListUser';
 import { ToastContainer, toast } from 'react-toastify';
@@ -40,7 +40,7 @@ const FriendRequest = () => {
   }, []);
 
   useEffect(() => {
-    socket?.on(NotificationEvent.NewFriend, (notification) => {
+    socket?.on(SocketEvents.NEW_MESSAGE, (notification) => {
       fetchData();
       toast(notification);
     });

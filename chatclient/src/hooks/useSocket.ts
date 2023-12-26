@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 interface UseSocketProps {
   userId: number | undefined;
-  chatId?: number;
+  roomName?: string;
 }
 
-const useSocket = ({ userId, chatId }: UseSocketProps) => {
+const useSocket = ({ userId, roomName }: UseSocketProps) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     const newSocket = io('http://localhost:8088', {
-      query: { userId: userId, chatId },
-      autoConnect: true,
+      query: { userId: userId, roomName },
+      autoConnect: false,
       reconnection: true,
     });
     setSocket(newSocket);
