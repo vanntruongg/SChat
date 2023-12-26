@@ -4,13 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum SocketEvent {
-    SEND_MESSAGE("send_message"),
-    READ_MESSAGE("read_message"),
+    SEND_PRIVATE_MESSAGE("send_private_message"),
+    READ_PRIVATE_MESSAGE("read_private_message"),
+    SEND_GROUP_MESSAGE("send_group_message"),
+    READ_GROUP_MESSAGE("read_group_message"),
     NEW_MESSAGE("new_message"),
     NEW_FRIEND("new_friend"),
     NOTIFICATION("notification");
 
-    private String event;
+    private final String event;
 
     SocketEvent(String event) {
         this.event = event;

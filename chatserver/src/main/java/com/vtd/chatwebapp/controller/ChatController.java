@@ -1,6 +1,7 @@
 package com.vtd.chatwebapp.controller;
 
 import com.vtd.chatwebapp.common.CommonResponse;
+import com.vtd.chatwebapp.common.StringUtils;
 import com.vtd.chatwebapp.constant.MessageConstant;
 import com.vtd.chatwebapp.service.GroupService;
 import com.vtd.chatwebapp.service.PrivateChatService;
@@ -32,6 +33,24 @@ public class ChatController {
                 .isSuccess(true)
                 .message(MessageConstant.FIND_SUCCESS)
                 .data(privateChatService.getAllPrivateChat(userId))
+                .build());
+    }
+
+    @GetMapping(GET_ID_PRIVATE_CHAT)
+    public ResponseEntity<CommonResponse<Object>> getIdPrivateChat(@RequestParam("user1Id") Long user1Id, @RequestParam("user2Id") Long user2Id) {
+        return ResponseEntity.ok().body(CommonResponse.builder()
+                .isSuccess(true)
+                .message(MessageConstant.FIND_SUCCESS)
+                .data(privateChatService.getIdPrivateChat(user1Id, user2Id))
+                .build());
+    }
+
+    @PostMapping
+    public ResponseEntity<CommonResponse<Object>> deletePrivateChatByUser(@RequestParam("userId") Long userId, @RequestParam("chatId") int chatId) {
+        return ResponseEntity.ok().body(CommonResponse.builder()
+                .isSuccess(true)
+                .message(MessageConstant.FIND_SUCCESS)
+                .data(privateChatService.deletePrivateChatByUser(userId, chatId))
                 .build());
     }
 

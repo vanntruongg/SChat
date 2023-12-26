@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @Table(name = "message", schema = "public")
 public class Message extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "message_id", nullable = false, updatable = false)
     private int messageId;
 

@@ -43,6 +43,7 @@ public class ApiEndpoint {
     public static final String PRIVATE = "/private";
     public static final String MESSAGE = "/message";
     public static final String MESSAGES = "/messages";
+    public static final String ROOM_NAME = "/room-name";
 
     public static final String USER_GET_ALL = "/users";
     public static final String USER_CREATE = USER + CREATE;
@@ -52,6 +53,8 @@ public class ApiEndpoint {
     public static final String USER_GET_AND_FRIEND_STATUS = USER + GET + FRIEND + STATUS;
     public static final String GROUP_CREATE = GROUP + CREATE;
     public static final String GET_OR_CREATE_PRIVATE_CHAT = GET + CREATE + PRIVATE + CHAT;
+    public static final String GET_ID_PRIVATE_CHAT = GET + ID + PRIVATE + CHAT;
+    public static final String GET_PRIVATE_ROOM_NAME = GET + PRIVATE + ROOM_NAME;
     public static final String GROUPS_JOINED = GROUPS + JOINED + ID_PARAM;
     public static final String GROUPS_NOT_JOINED = GROUPS + NOT + JOINED + ID_PARAM;
     public static final String CHATS_PRIVATE = CHATS + PRIVATE + ID_PARAM;

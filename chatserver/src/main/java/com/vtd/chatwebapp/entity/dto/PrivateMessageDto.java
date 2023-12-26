@@ -3,10 +3,9 @@ package com.vtd.chatwebapp.entity.dto;
 import lombok.Getter;
 
 @Getter
-public class MessageDto {
+public class PrivateMessageDto {
     private Long senderId;
-//    private Long receiverId;
+    private Long receiverId;
     private Integer privateChatId;
-    private Integer groupId;
     private String content;
 }

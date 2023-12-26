@@ -21,4 +21,7 @@ public class StringUtils {
         return name.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
+    public static String generateRoomName(Long userId1, Long userId2) {
+        return "private_room_chat_" + userId1 + "_" + userId2;
+    }
 }

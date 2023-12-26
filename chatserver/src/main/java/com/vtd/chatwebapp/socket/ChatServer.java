@@ -6,7 +6,8 @@ import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.vtd.chatwebapp.entity.Message;
-import com.vtd.chatwebapp.entity.dto.MessageDto;
+import com.vtd.chatwebapp.entity.dto.MessageResponse;
+import com.vtd.chatwebapp.entity.dto.PrivateMessageDto;
 import com.vtd.chatwebapp.enums.SocketEvent;
 import com.vtd.chatwebapp.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,23 +20,26 @@ public class ChatServer {
 
     private final MessageService messageService;
     private final UserSessionService userSessionService;
+    private final NotificationService notificationService;
 
-    public ChatServer(SocketIOServer server, MessageService messageService, UserSessionService userSessionService) {
+    public ChatServer(SocketIOServer server, MessageService messageService, UserSessionService userSessionService, NotificationService notificationService) {
         this.server = server;
         this.messageService = messageService;
         this.userSessionService = userSessionService;
+        this.notificationService = notificationService;
 
         server.addConnectListener(onConnected());
         server.addDisconnectListener(onDisconnected());
-        this.server.addEventListener(SocketEvent.SEND_MESSAGE.getEvent(), MessageDto.class, onChatReceived());
+        this.server.addEventListener(SocketEvent.SEND_PRIVATE_MESSAGE.getEvent(), PrivateMessageDto.class, onPrivateChatReceived());
     }
 
-    private DataListener<MessageDto> onChatReceived() {
+    private DataListener<PrivateMessageDto> onPrivateChatReceived() {
         return (client, data, ackSender) -> {
            log.debug("Client[{}] - Received chat message: {}", client.getSessionId().toString(), data);
-            Message message = messageService.saveMessage(data);
+            MessageResponse message = messageService.savePrivateMessage(data);
             String roomName = generatePrivateRoomNameFromClient(client);
-            server.getRoomOperations(roomName).sendEvent(SocketEvent.READ_MESSAGE.getEvent(), message);
+            server.getRoomOperations(roomName).sendEvent(SocketEvent.READ_PRIVATE_MESSAGE.getEvent(), message);
+            server.getRoomOperations(roomName).sendEvent(SocketEvent.NEW_MESSAGE.getEvent());
         };
     }
 
@@ -67,8 +71,7 @@ public class ChatServer {
     }
 
     private String generatePrivateRoomNameFromClient(SocketIOClient client) {
-        String chatId =  client.getHandshakeData().getSingleUrlParam("chatId");
-        return "private_room_" + chatId;
+        return client.getHandshakeData().getSingleUrlParam("roomName");
     }
 
 }

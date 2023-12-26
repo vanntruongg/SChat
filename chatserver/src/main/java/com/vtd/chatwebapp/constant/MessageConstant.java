@@ -51,5 +51,6 @@ public class MessageConstant {
     // notify
     public static final String SENT_FRIEND_REQUEST = "has sent a friend request.";
     public static final String ACCEPTED_FRIEND_REQUEST = "has accepted the friend request.";
+    public static final String SENT_NEW_MESSAGE = "has sent a new message.";
 
 }
